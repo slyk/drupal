@@ -1,0 +1,5 @@
+name = Call Me Back
+description = "Page for simple 'call me back' form with a bunch of standart elements that could be turned on/off. Can use Lightbox2 to show form in modal box over your site."
+package = TooPro
+core = 7.x
+version = 7001

@@ -1,0 +1,3 @@
+[submodule "sites/all/modules/TooPro"]
+	path = sites/all/modules/TooPro
+	url = https://bitbucket.org/tpshop/tps_retail_do_entity/src/
