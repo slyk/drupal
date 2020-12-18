@@ -391,7 +391,7 @@ function drupal_add_feed($url = NULL, $title = '') {
  */
 function drupal_get_feeds($delimiter = "\n") {
   $feeds = drupal_add_feed();
-  return implode($feeds, $delimiter);
+  return implode($delimiter, $feeds); //tooprofix Dec2020 php to 7.4
 }
 
 /**
@@ -3743,7 +3743,7 @@ function _drupal_build_css_path($matches, $base = NULL) {
   }
 
   // Prefix with base and remove '../' segments where possible.
-  $path = $_base . $matches[1];
+    $path = $_base . (isset($matches[1]) ? $matches[1]: '');    //tooprofix Dec2020 php 7.4
   $last = '';
   while ($path != $last) {
     $last = $path;
@@ -6656,7 +6656,7 @@ function element_children(&$elements, $sort = FALSE) {
   $children = array();
   $sortable = FALSE;
   foreach ($elements as $key => $value) {
-    if ($key === '' || $key[0] !== '#') {
+      if ($key === '' || (0 !== strpos($key, '#'))) { //tooprofix dec 2020 to php7.4
       $children[$key] = $value;
       if (is_array($value) && isset($value['#weight'])) {
         $sortable = TRUE;
