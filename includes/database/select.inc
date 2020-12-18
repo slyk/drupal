@@ -1520,16 +1520,13 @@ class SelectQuery extends Query implements SelectQueryInterface {
     $fields = array();
     foreach ($this->tables as $alias => $table) {
       if (!empty($table['all_fields'])) {
-        $fields[] = $this->connection->escapeAlias($alias) . '.*';
+        $fields[] = $this->connection->escapeTable($alias) . '.*';
       }
     }
     foreach ($this->fields as $alias => $field) {
-      // Note that $field['table'] holds the table alias.
-      // @see \SelectQuery::addField
-      $table = isset($field['table']) ? $this->connection->escapeAlias($field['table']) . '.' : '';
       // Always use the AS keyword for field aliases, as some
       // databases require it (e.g., PostgreSQL).
-      $fields[] = $table . $this->connection->escapeField($field['field']) . ' AS ' . $this->connection->escapeAlias($field['alias']);
+      $fields[] = (isset($field['table']) ? $this->connection->escapeTable($field['table']) . '.' : '') . $this->connection->escapeField($field['field']) . ' AS ' . $this->connection->escapeAlias($field['alias']);
     }
     foreach ($this->expressions as $alias => $expression) {
       $fields[] = $expression['expression'] . ' AS ' . $this->connection->escapeAlias($expression['alias']);
@@ -1558,7 +1555,7 @@ class SelectQuery extends Query implements SelectQueryInterface {
 
       // Don't use the AS keyword for table aliases, as some
       // databases don't support it (e.g., Oracle).
-      $query .=  $table_string . ' ' . $this->connection->escapeAlias($table['alias']);
+      $query .=  $table_string . ' ' . $this->connection->escapeTable($table['alias']);
 
       if (!empty($table['condition'])) {
         $query .= ' ON ' . $table['condition'];

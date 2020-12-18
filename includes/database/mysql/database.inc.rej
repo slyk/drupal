@@ -1,0 +1,92 @@
+--- database.inc
++++ database.inc
+@@ -357,21 +628,88 @@ public function __construct(array $connection_options = array()) {
+     $connection_options += array(
+       'init_commands' => array(),
+     );
++
+     $connection_options['init_commands'] += array(
+-      'sql_mode' => "SET sql_mode = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER'",
++      'sql_mode' => "SET sql_mode = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO'",
+     );
++
+     // Execute initial commands.
+     foreach ($connection_options['init_commands'] as $sql) {
+       $this->exec($sql);
+     }
+   }
+ 
++  /**
++   * {@inheritdoc}
++   */
++  public function prefixTables($sql) {
++    // Escape reserved mysql keywords used as table names.
++    $sql = array_reduce($this->reservedKeyWords, function ($original_sql, $keyword) {
++      return str_replace('{' . $keyword . '}', '`{' . $keyword . '}`', $original_sql);
++    }, $sql);
++    return parent::prefixTables($sql);
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function escapeField($field) {
++    $field = parent::escapeField($field);
++    return $this->quoteIdentifier($field);
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function escapeAlias($field) {
++    // Quote fields so that MySQL reserved words like 'function' can be used
++    // as aliases.
++    $field = parent::escapeAlias($field);
++    return $this->quoteIdentifier($field);
++  }
++
++  /**
++   * Quotes an identifier if it matches a MySQL reserved keyword.
++   *
++   * @param string $identifier
++   *   The field to check.
++   *
++   * @return string
++   *   The identifier, quoted if it matches a MySQL reserved keyword.
++   */
++  private function quoteIdentifier($identifier) {
++    // Quote identifiers so that MySQL reserved words like 'function' can be
++    // used as column names. Sometimes the 'table.column_name' format is passed
++    // in. For example,
++    // \Drupal\Core\Entity\Sql\SqlContentEntityStorage::buildQuery() adds a
++    // condition on "base.uid" while loading user entities.
++    if (strpos($identifier, '.') !== FALSE) {
++      list($table, $identifier) = explode('.', $identifier, 2);
++    }
++    if (in_array(strtolower($identifier), $this->reservedKeyWords, TRUE)) {
++      // Quote the string for MySQL reserved keywords.
++      $identifier = '"' . $identifier . '"';
++    }
++    return isset($table) ? $table . '.' . $identifier : $identifier;
++  }
++
+   public function __destruct() {
+     if ($this->needsCleanup) {
+       $this->nextIdDelete();
+     }
+   }
+ 
++  public function query($query, array $args = array(), $options = array()) {
++    $query = preg_replace('/{([^}]+)}/', '`\1`', $query);
++    // This to make Drush work
++    $query = strtr($query, array(
++      ' system.' => ' `system`.',
++      '`system` system' => '`system` `system`',
++    ));
++
++    return parent::query($query, $args, $options);
++  }
++
+   public function queryRange($query, $from, $count, array $args = array(), array $options = array()) {
+     return $this->query($query . ' LIMIT ' . (int) $from . ', ' . (int) $count, $args, $options);
+   }

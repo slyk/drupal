@@ -163,12 +163,6 @@ class DatabaseTestCase extends DrupalWebTestCase {
         'priority' => 3,
       ))
       ->execute();
-
-    db_insert('virtual')
-      ->fields(array(
-        'function' => 'Function value 1',
-      ))
-      ->execute();
   }
 }
 

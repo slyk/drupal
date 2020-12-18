@@ -6,11 +6,6 @@
  */
 
 /**
- * The default character for quoting identifiers in MySQL.
- */
-define('MYSQL_IDENTIFIER_QUOTE_CHARACTER_DEFAULT', '`');
-
-/**
  * @addtogroup database
  * @{
  */
@@ -29,7 +24,7 @@ class DatabaseConnection_mysql extends DatabaseConnection {
    *
    * @link https://dev.mysql.com/doc/refman/8.0/en/keywords.html
    */
-  private $reservedKeyWords = array(
+  private $reservedKeyWords = [
     'accessible',
     'add',
     'admin',
@@ -293,7 +288,7 @@ class DatabaseConnection_mysql extends DatabaseConnection {
     'xor',
     'year_month',
     'zerofill',
-  );
+  ];
 
   public function __construct(array $connection_options = array()) {
     // This driver defaults to transaction support, except if explicitly passed FALSE.
@@ -363,14 +358,8 @@ class DatabaseConnection_mysql extends DatabaseConnection {
       'init_commands' => array(),
     );
 
-    $sql_mode = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO';
-    // NO_AUTO_CREATE_USER was removed in MySQL 8.0.11
-    // https://dev.mysql.com/doc/relnotes/mysql/8.0/en/news-8-0-11.html#mysqld-8-0-11-deprecation-removal
-    if (version_compare($this->getAttribute(PDO::ATTR_SERVER_VERSION), '8.0.11', '<')) {
-      $sql_mode .= ',NO_AUTO_CREATE_USER';
-    }
     $connection_options['init_commands'] += array(
-      'sql_mode' => "SET sql_mode = '$sql_mode'",
+      'sql_mode' => "SET sql_mode = 'REAL_AS_FLOAT,PIPES_AS_CONCAT,ANSI_QUOTES,IGNORE_SPACE,STRICT_TRANS_TABLES,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO'",
     );
 
     // Execute initial commands.
@@ -380,49 +369,33 @@ class DatabaseConnection_mysql extends DatabaseConnection {
   }
 
   /**
-   * {@inheritdoc}}
+   * {@inheritdoc}
    */
-  protected function setPrefix($prefix) {
-    parent::setPrefix($prefix);
-    // Successive versions of MySQL have become increasingly strict about the
-    // use of reserved keywords as table names. Drupal 7 uses at least one such
-    // table (system). Therefore we surround all table names with quotes.
-    $quote_char = variable_get('mysql_identifier_quote_character', MYSQL_IDENTIFIER_QUOTE_CHARACTER_DEFAULT);
-    foreach ($this->prefixSearch as $i => $prefixSearch) {
-      if (substr($prefixSearch, 0, 1) === '{') {
-        // If the prefix already contains one or more quotes remove them.
-        // This can happen when - for example - DrupalUnitTestCase sets up a
-        // "temporary prefixed database".
-        $this->prefixReplace[$i] = $quote_char . str_replace($quote_char, '', $this->prefixReplace[$i]);
-      }
-      if (substr($prefixSearch, -1) === '}') {
-        $this->prefixReplace[$i] .= $quote_char;
-      }
-    }
+  public function prefixTables($sql) {
+    // Escape reserved mysql keywords used as table names.
+    $sql = array_reduce($this->reservedKeyWords, function ($original_sql, $keyword) {
+      return str_replace('{' . $keyword . '}', '`{' . $keyword . '}`', $original_sql);
+    }, $sql);
+    return parent::prefixTables($sql);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function escapeField($field) {
+  /*public function escapeField($field) {
     $field = parent::escapeField($field);
     return $this->quoteIdentifier($field);
-  }
-
-  public function escapeFields(array $fields) {
-    foreach ($fields as &$field) {
-      $field = $this->escapeField($field);
-    }
-    return $fields;
-  }
+  }*/
 
   /**
    * {@inheritdoc}
    */
-  public function escapeAlias($field) {
+  /*public function escapeAlias($field) {
+    // Quote fields so that MySQL reserved words like 'function' can be used
+    // as aliases.
     $field = parent::escapeAlias($field);
     return $this->quoteIdentifier($field);
-  }
+  }*/
 
   /**
    * Quotes an identifier if it matches a MySQL reserved keyword.
@@ -436,14 +409,15 @@ class DatabaseConnection_mysql extends DatabaseConnection {
   private function quoteIdentifier($identifier) {
     // Quote identifiers so that MySQL reserved words like 'function' can be
     // used as column names. Sometimes the 'table.column_name' format is passed
-    // in. For example, menu_load_links() adds a condition on "ml.menu_name".
+    // in. For example,
+    // \Drupal\Core\Entity\Sql\SqlContentEntityStorage::buildQuery() adds a
+    // condition on "base.uid" while loading user entities.
     if (strpos($identifier, '.') !== FALSE) {
       list($table, $identifier) = explode('.', $identifier, 2);
     }
     if (in_array(strtolower($identifier), $this->reservedKeyWords, TRUE)) {
       // Quote the string for MySQL reserved keywords.
-      $quote_char = variable_get('mysql_identifier_quote_character', MYSQL_IDENTIFIER_QUOTE_CHARACTER_DEFAULT);
-      $identifier = $quote_char . $identifier . $quote_char;
+      $identifier = '"' . $identifier . '"';
     }
     return isset($table) ? $table . '.' . $identifier : $identifier;
   }
@@ -452,6 +426,17 @@ class DatabaseConnection_mysql extends DatabaseConnection {
     if ($this->needsCleanup) {
       $this->nextIdDelete();
     }
+  }
+
+  public function query($query, array $args = array(), $options = array()) {
+    $query = preg_replace('/{([^}]+)}/', '`\1`', $query);
+    // This to make Drush work
+    $query = strtr($query, array(
+      ' system.' => ' `system`.',
+      '`system` system' => '`system` `system`',
+    ));
+
+    return parent::query($query, $args, $options);
   }
 
   public function queryRange($query, $from, $count, array $args = array(), array $options = array()) {

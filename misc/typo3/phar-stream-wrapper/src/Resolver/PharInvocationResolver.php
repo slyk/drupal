@@ -14,7 +14,6 @@ namespace TYPO3\PharStreamWrapper\Resolver;
 use TYPO3\PharStreamWrapper\Helper;
 use TYPO3\PharStreamWrapper\Manager;
 use TYPO3\PharStreamWrapper\Phar\Reader;
-use TYPO3\PharStreamWrapper\Phar\ReaderException;
 use TYPO3\PharStreamWrapper\Resolvable;
 
 class PharInvocationResolver implements Resolvable
@@ -60,7 +59,7 @@ class PharInvocationResolver implements Resolvable
     {
         $hasPharPrefix = Helper::hasPharPrefix($path);
         if ($flags === null) {
-            $flags = static::RESOLVE_REALPATH | static::RESOLVE_ALIAS;
+            $flags = static::RESOLVE_REALPATH | static::RESOLVE_ALIAS | static::ASSERT_INTERNAL_INVOCATION;
         }
 
         if ($hasPharPrefix && $flags & static::RESOLVE_ALIAS) {
@@ -148,14 +147,9 @@ class PharInvocationResolver implements Resolvable
             }
             // ensure the possible alias name (how we have been called initially) matches
             // the resolved alias name that was retrieved by the current possible base name
-            try {
-                $reader = new Reader($currentBaseName);
-                $currentAlias = $reader->resolveContainer()->getAlias();
-            } catch (ReaderException $exception) {
-                // most probably that was not a Phar file
-                continue;
-            }
-            if (empty($currentAlias) || $currentAlias !== $possibleAlias) {
+            $reader = new Reader($currentBaseName);
+            $currentAlias = $reader->resolveContainer()->getAlias();
+            if ($currentAlias !== $possibleAlias) {
                 continue;
             }
             $this->addBaseName($currentBaseName);
@@ -221,9 +215,7 @@ class PharInvocationResolver implements Resolvable
         if (isset($this->baseNames[$baseName])) {
             return;
         }
-        $this->baseNames[$baseName] = Helper::normalizeWindowsPath(
-            realpath($baseName)
-        );
+        $this->baseNames[$baseName] = realpath($baseName);
     }
 
     /**

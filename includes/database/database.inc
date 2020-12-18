@@ -953,7 +953,7 @@ abstract class DatabaseConnection extends PDO {
    * @return string
    *   The sanitized field name string.
    */
-  public function escapeField($field) {
+  public function escapeField($field) { //if(!is_string($field)) {debug_print_backtrace(); die(print_r($field,1));}
     if (!isset($this->escapedNames[$field])) {
       $this->escapedNames[$field] = preg_replace('/[^A-Za-z0-9_.]+/', '', $field);
     }
