@@ -20,8 +20,16 @@ require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
 drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 //menu_execute_active_handler();
 
-$csv = '';
 
+echo "get prroo";
+//TPSPayPrro::get();
+//file_put_contents('private://prro.cookies.txt', 'testccc');
+//$prro = TPSPayPrro::get()->shiftOpen();
+$prro = TPSPayPrro::get()->shiftGetCurrent();
+var_dump($prro);
+
+
+$csv = '';
 
 /**
  * Загружает таблицу с сервера парсит каждый её ряд в массив и отправляет в спец. функцию
@@ -122,9 +130,10 @@ function tps_csv_apply_product_row($lineArr, $city) {
 	$newPrices .= date('d.m.o').";id $nid;CTAPA9 $oldPrice; HOBA9 $newPrice\r\n";
 }
 
+//update price
+//tps_csv_update_price('kramatorsk');
 
-tps_csv_update_price('kramatorsk');
-
+/*
 //add to file
 $newPrices .= file_get_contents('newprice.csv');
 file_put_contents('newprice.csv', $newPrices);
@@ -145,3 +154,4 @@ if($mqtt->connect(true, NULL, $user, $pass)) {
 }
 
 //$mqc->connect();
+*/
