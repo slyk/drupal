@@ -21,12 +21,13 @@ drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 //menu_execute_active_handler();
 
 
-echo "get prroo";
+echo "get prroo // \r\n";
 //TPSPayPrro::get();
 //file_put_contents('private://prro.cookies.txt', 'testccc');
 //$prro = TPSPayPrro::get()->shiftOpen();
-$prro = TPSPayPrro::get()->shiftGetCurrent();
+$prro = TPSPayPrro::get()->validateWorkingState(false);
 var_dump($prro);
+echo "// end";
 
 
 $csv = '';
