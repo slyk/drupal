@@ -26,7 +26,9 @@ echo "get prroo // \r\n";
 //file_put_contents('private://prro.cookies.txt', 'testccc');
 //$prro = TPSPayPrro::get()->shiftOpen();
 $prro = TPSPayPrro::get()->validateWorkingState(false);
+//$prro = TPSPayPrro::get()->receiptGetLast();
 var_dump($prro);
+
 echo "// end";
 
 
