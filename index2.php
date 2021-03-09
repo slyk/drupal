@@ -20,14 +20,30 @@ require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
 drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 //menu_execute_active_handler();
 
+$data = (object) array(34534 => array(), 334 => array());
+echo count($data);
+die();
 
 echo "get prroo // \r\n";
 //TPSPayPrro::get();
 //file_put_contents('private://prro.cookies.txt', 'testccc');
 //$prro = TPSPayPrro::get()->shiftOpen();
-$prro = TPSPayPrro::get()->validateWorkingState(false);
+//$prro = TPSPayRROAPI::get()->validateWorkingState(false);
 //$prro = TPSPayPrro::get()->receiptGetLast();
-var_dump($prro);
+//var_dump($prro);
+$prro = TPSPayRROAPI::get();
+//$prro->receiptDeleteActive(); die();
+//$last = $prro->shiftGetCurrent(); print_r($last); die();
+$last = $prro->receiptGetLast(); print_r($last); die();
+//$prro->shiftOpen();
+die();
+
+//load transaction and convert to trans object (so we can save it in future)
+$trans = TPSTransAPI::read("1G3Q5", true);					//get full transaction info
+if(!$trans) return 'Error: cant load transaction with given ID';
+$trans = TPSTransValidator::castHashes($trans);					    //cast loaded data hash to transaction
+print_r($trans);die();
+TPSPayRRO::sendReceipt($trans);
 
 echo "// end";
 
