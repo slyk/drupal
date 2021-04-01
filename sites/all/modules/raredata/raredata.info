@@ -1,0 +1,5 @@
+name = Rare Data Store
+description = "Used for storing store big data hashes, needed rarely. Data loaded only when needed. Bundled with Services 3 resource."
+package = TooPro
+core = 7.x
+version = 7001

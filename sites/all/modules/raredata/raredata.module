@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * Load variable with given name from DB
+ * @param String $varName
+ */
+function raredata_load($varName) {
+	$data = db_select('raredata','d')->condition('name',$varName)->fields('d', array('data'))->execute()->fetchField();
+	return unserialize($data);
+}
+
+/**
+ * Save data to DB.
+ * @param String $varName
+ * @param $data data to be stored. Will be serialized. Passed by reference.
+ * @param $force TRUE - If there is some record with $varName it will be replaced. FALSE - will check befor write and return FALSE is there are record with this name already.
+ * @param $expires UNIX timestamp where to delete this data. Use for temp records. Zero meens forever.
+ * @return TRUE if data was written and FALSE if no data was saved to DB.
+ */
+function raredata_save($varName, &$data, $force=1, $expires=0) {//TODO use db_merge if force is true.
+	$exists = db_select('raredata','d')->condition('name',$varName)->fields('d',array('name'))->execute()->fetchField();
+	if(!$force && $exists) return FALSE;
+	if($exists) $update = array('name'); else $update = array();
+
+	$rec = array('name'=>$varName,'data'=>$data,'expires'=>$expires);
+	$ret = drupal_write_record('raredata', $rec, $update);
+	if($ret==FALSE) return FALSE; else return TRUE;
+}
+
+/**
+ * Delete data with given name from DB.
+ * @param String $varName
+ */
+function raredata_delete($varName) {
+	db_delete('raredata')->condition('name',$varName)->execute();
+}
+
+/**
+* Implements hook_permission().
+*/
+function raredata_permission() {
+	return array(
+		'raredata read'		=>  array('title' => t('Read simple raredata records remotely.')),
+		//'raredata read sys_'=>  array('title' => t('Read raredata records prefixed with "sys_" remotely.')),//TODO: process this
+		'raredata write'	=>  array('title' => t('Write raredata records remotely.')),
+	);
+}
+
+/**
+* Implements hook_services_resources().
+*/
+function raredata_services_resources() {
+	return array(
+		'raredata'=> array('actions'=>array(
+			'load'=> array(
+				'help'		=> 'Load variable with given name from DB',
+				'callback'	=> 'raredata_load',
+				'access callback'=>'user_access',
+				'access arguments' => array('raredata read'),
+				'args'		=> array(
+					array('name'=>'varName', 'type'=>'string', 'description'=>'Name of the variable to load','source'=>'data','optional'=>FALSE),
+				)
+			),
+			'save'=> array(
+				'help'		=> 'Save data to DB. TRUE or FALSE returned. Be carefull, user can reset ALL raredatas remotely!',
+				'callback'	=> 'raredata_save',
+				'access callback'=>'user_access',
+				'access arguments' => array('raredata write'),
+				'args'		=> array(
+						array('name'=>'varName', 'type'=>'string', 'description'=>'Name of the variable to save to','source'=>'data','optional'=>FALSE),
+						array('name'=>'data', 'type'=>'array', 'description'=>'Data hash to be saved','source'=>'data','optional'=>FALSE),
+						array('name'=>'force','type'=>'int','description'=>'TRUE - If there is some record with $varName it will be replaced. FALSE - will check befor write and return FALSE is there are record with this name already.','source'=>'data','default value'=>1, 'optional'=>TRUE),
+						array('name'=>'expires','type'=>'int','description'=>'UNIX timestamp where to delete this data. Use for temp records','source'=>'data','default value'=>0, 'optional'=>TRUE),
+				)
+			),
+		))//raredata
+	);
+}
