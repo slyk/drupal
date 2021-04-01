@@ -4,4 +4,6 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
-/sites/all/libraries/Zend/
+#/sites/all/libraries/Zend/
+/sites/all/libraries/prro/files_printer/
+/sites/all/libraries/prro/kasa-1.0.1.39/files_printer/
