@@ -1,0 +1,29 @@
+{
+  "logging": {
+    "file": "./logs/rro_agent.log",
+    "debug" : true
+  },
+  "provider": {
+    "url": "https://dev-api.checkbox.in.ua",
+    "license_key": "e3a9d76dbb20977bd674b950",
+    "request_timeout": 60,
+    "pin_code": "6584808397"
+  },
+  "transport": {
+    "default": "TCP",
+    "tcp": {
+      "host": "127.0.0.1",
+      "port": 13000
+    }
+  },
+  "web_server": {
+    "host": "127.0.0.1",
+    "port": 9200,
+    "docs": true
+  },
+  "printer": {
+    "type": "generic",
+    "custom_width": 27,
+    "name": "Microsoft Print to PDF"
+  }
+}
