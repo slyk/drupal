@@ -38,7 +38,12 @@ toopro@TooPro-WorkMain:/var/www/petr.tps.my/sites/all/modules/TooPro/tps_pay_met
 и касса также, но ее можно и через друпал дернуть и аутентифировать.
 =================
 
+KAsa:
 https://agents.checkbox.in.ua/agents/checkboxAgentRRO/Linux/offline/
+
+Sign:
+https://agents.checkbox.in.ua/agents/checkboxAgentSign/Linux/
+
 
 Уточнила Ваш вопрос, попробуйте: 1. Скачать и распаковать архив под нужную платформу (https://agents.checkbox.in.ua/agents/checkboxAgentRRO/Linux/offline/)
 2. Выдать права на выполнения и чтение, если нужно
