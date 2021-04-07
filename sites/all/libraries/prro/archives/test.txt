@@ -251,3 +251,25 @@ http://localhost:9200/api/docs#/%D0%9A%D0%B5%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD
 а если одновременноподписывали в разных магазинах один и тот же ФОП?
 
 а также генерироват свой QR и свою ссылку для проверки чека, когда чел оплачивает бонусами, например
+
+
+
+
+
+receipt M:Сума оплати повинна покривати сумму товарів по чеку (4.52 < 4.50)
+
+
+2021-04-07 02:59:55.069 | INFO     | rro_agent.routes.api.receipt:create_receipt:129 - Create receipt payload: departament=None cashier_name='касир 1' header=None footer='{3TT6Y}' barcode=None discounts=[DiscountPayload(type=<DiscountType.DISCOUNT: 'DISCOUNT'>, mode=<DiscountMode.VALUE: 'VALUE'>, value=Decimal('2'), name='округл.', tax_codes=None)]
+2021-04-07 02:59:55.184 | INFO     | logging:callHandlers:1649 - 127.0.0.1:54944 - "POST /api/v1/receipt HTTP/1.1" 200
+2021-04-07 02:59:55.192 | INFO     | rro_agent.routes.api.receipt:add_good_to_active_receipt:210 - Add good to receipt payload: code='395' name='Шапочка для волос' price=226 quantity=2000 taxes=None discounts=[] is_return=False
+2021-04-07 02:59:55.284 | INFO     | logging:callHandlers:1649 - 127.0.0.1:54946 - "POST /api/v1/receipt/good HTTP/1.1" 200
+2021-04-07 02:59:55.288 | INFO     | rro_agent.routes.api.receipt:close_receipt:266 - Close receipt payload: payments=[PaymentPayload(type=<PaymentType.CASH: 'CASH'>, value=450, label='готiвка')] delivery=DeliveryPayload(email='slykirill@gmail.com') print=True remove_rest=False technical_return=False
+2021-04-07 02:59:55.290 | INFO     | rro_agent.controllers.receipt:calculate:159 - Receipt summary: ReceiptSummary(goods={Good(index=1, price=Decimal('226'), quantity=Decimal('2000'), taxes=(), discounts=()): GoodSummary(sum=Decimal('452'), effective_sum=Decimal('452'), taxes={}, discounts={})}, taxes={}, discounts={}, sum=Decimal('452'))
+2021-04-07 02:59:55.291 | ERROR    | rro_agent.constructor.routes:custom_http_exception_handler:50 - Error caused HTTPException(status_code=400, detail='Сума оплати повинна покривати сумму товарів по чеку (4.52 < 4.50)')
+2021-04-07 02:59:55.291 | INFO     | logging:callHandlers:1649 - 127.0.0.1:54948 - "POST /api/v1/receipt/done HTTP/1.1" 400
+
+
+TPSPayNewReceiptPayload Object ( [department] => магазин [cashier_name] => касир 1 [header] => [footer] => {3TT6Y} [barcode] => [discounts] => Array ( [0] => TPSPayDiscountPayload Object ( [type] => DISCOUNT [mode] => VALUE [value] => 2 [name] => округл. [tax_codes] => Array ( [0] => 8 ) ) ) )
+
+
+
