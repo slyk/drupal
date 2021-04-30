@@ -179,6 +179,7 @@ define('FIELD_STORAGE_INSERT', 'insert');
  *    languages to act on.
  */
 function _field_invoke($op, $entity_type, $entity, &$a = NULL, &$b = NULL, $options = array()) {
+
   // Merge default options.
   $default_options = array(
     'default' => FALSE,
@@ -218,10 +219,20 @@ function _field_invoke($op, $entity_type, $entity, &$a = NULL, &$b = NULL, $opti
           }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //TOOPRO fox 04.2021 - дата поле нода заменяется пустым массивом и падает под конфликт. исправляем жестко тут
+        /*if($field_name=='data' && gettype($entity->{$field_name})=='string') {
+            drupal_set_message(print_r($entity,1).print_r($a,1));
+            $entity->data = $b['input']['data'];
+            drupal_set_message(print_r($entity,1));
+        }*/
+        //TOOPRO fox 04.2021 - дата поле нода заменяется пустым массивом и падает под конфликт. исправляем жестко тут
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         // Populate $items back in the field values, but avoid replacing missing
         // fields with an empty array (those are not equivalent on update).
         if ($items !== array() || isset($entity->{$field_name}[$langcode])) {
-          $entity->{$field_name}[$langcode] = $items;
+          $entity->{$field_name}[$langcode] = $items;//drupal_set_message(print_r($entity,1).print_r($b,1));
         }
       }
     }
@@ -838,6 +849,8 @@ function field_attach_form_validate($entity_type, $entity, $form, &$form_state, 
   // Validate $options since this is a new parameter added after Drupal 7 was
   // released.
   $options = is_array($options) ? $options : array();
+
+  //print_r($form_state);
 
   // Extract field values from submitted values.
   _field_invoke_default('extract_form_values', $entity_type, $entity, $form, $form_state);
