@@ -5,9 +5,9 @@
   },
   "provider": {
     "url": "https://api.checkbox.in.ua",
-    "license_key": "126b3696285bf1879606383c",
+    "license_key": "e527dd7faf84525955d3ddc6",
     "request_timeout": 60,
-    "pin_code": "4150455076"
+    "pin_code": "0130599235"
   },
   "transport": {
     "default": "TCP",
