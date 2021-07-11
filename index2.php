@@ -21,14 +21,14 @@ drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 //menu_execute_active_handler();
 
 
-$prro = TPSPayRROAPI::get();
+//$prro = TPSPayRROAPI::get();
 //file_put_contents('private://prro.cookies.txt', 'testccc');
 //$prro = TPSPayPrro::get()->shiftOpen();
 //$prro = TPSPayRROAPI::get()->validateWorkingState(false);
 //$prro = TPSPayPrro::get()->receiptGetLast();
 //var_dump($prro);
 //$res = $prro->receiptGetLast();
-$prro->shiftClose();
+//$prro->shiftClose();
 
 //$prro->receiptDeleteActive(); die();
 //$last = $prro->shiftGetCurrent(); print_r($last); die();
@@ -38,8 +38,8 @@ $prro->shiftClose();
 //echo tps_pay_method_rro_cron();
 //module_load_include('inc','tps_pay_method','tpspay.resource');
 //_tpsrr_rro_receipt_check('1R8S+8');
-print_r($res);
-die();
+//print_r($res);
+die("уже не пользуемся этой штукой");
 
 //load transaction and convert to trans object (so we can save it in future)
 $trans = TPSTransAPI::read("1G3Q5", true);					//get full transaction info
