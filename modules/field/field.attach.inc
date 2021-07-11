@@ -219,20 +219,18 @@ function _field_invoke($op, $entity_type, $entity, &$a = NULL, &$b = NULL, $opti
           }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //TOOPRO fox 04.2021 - дата поле нода заменяется пустым массивом и падает под конфликт. исправляем жестко тут
-        /*if($field_name=='data' && gettype($entity->{$field_name})=='string') {
-            drupal_set_message(print_r($entity,1).print_r($a,1));
-            $entity->data = $b['input']['data'];
-            drupal_set_message(print_r($entity,1));
-        }*/
-        //TOOPRO fox 04.2021 - дата поле нода заменяется пустым массивом и падает под конфликт. исправляем жестко тут
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        //toopro tps fix 07.2021 !!fix TPS saving DATA fields
+        if($field_name=='data' && $op=='extract_form_values' && !isset($entity->{$field_name}[$langcode])) {
+            $entity->data = $b['values']['data'];
+            //print_r($entity); die();// debug_print_backtrace(); print_r($b['values']['data']); die();
+        };//toopro tps fix
+        ////toopro tps fix 07.2021 !!fix TPS saving DATA fields
 
         // Populate $items back in the field values, but avoid replacing missing
         // fields with an empty array (those are not equivalent on update).
         if ($items !== array() || isset($entity->{$field_name}[$langcode])) {
-          $entity->{$field_name}[$langcode] = $items;//drupal_set_message(print_r($entity,1).print_r($b,1));
+          $entity->{$field_name}[$langcode] = $items;
         }
       }
     }
@@ -849,8 +847,6 @@ function field_attach_form_validate($entity_type, $entity, $form, &$form_state, 
   // Validate $options since this is a new parameter added after Drupal 7 was
   // released.
   $options = is_array($options) ? $options : array();
-
-  //print_r($form_state);
 
   // Extract field values from submitted values.
   _field_invoke_default('extract_form_values', $entity_type, $entity, $form, $form_state);
