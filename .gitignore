@@ -9,3 +9,5 @@ sites/*/private
 /sites/all/libraries/prro/kasa-*/files_printer/
 /sites/all/libraries/prro/kasa-*/logs/
 /sites/all/libraries/prro/sign0321/logs/
+/sites/all/modules/TooPro/.idea/
+/.idea/
