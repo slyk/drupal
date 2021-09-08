@@ -40,6 +40,9 @@ toopro@TooPro-WorkMain:/var/www/petr.tps.my/sites/all/modules/TooPro/tps_pay_met
 
 KAsa:
 https://agents.checkbox.in.ua/agents/checkboxAgentRRO/Linux/offline/
+версия которую давали в августе2021
+wget https://agents.checkbox.in.ua/agents/checkboxAgentRRO/Linux/checkbox_kasa-1.1.15-linux-x86_64.tar.gz
+
 
 Sign:
 https://agents.checkbox.in.ua/agents/checkboxAgentSign/Linux/
