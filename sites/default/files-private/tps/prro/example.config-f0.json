@@ -1,0 +1,24 @@
+{
+  "logging": {
+    "file": "./logs/rro_agent2.log",
+    "debug" : true
+  },
+  "provider": {
+    "url": "https://api.checkbox.in.ua",
+    "license_key": "test69cdd7b92b4296052cece05b",
+    "request_timeout": 60,
+    "pin_code": "6010017433"
+  },
+  "transport": {
+    "default": "TCP",
+    "tcp": {
+      "host": "127.0.0.1",
+      "port": 13000
+    }
+  },
+  "web_server": {
+    "host": "127.0.0.1",
+    "port": 9200,
+    "docs": true
+  }
+}
