@@ -21,13 +21,13 @@ drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 //menu_execute_active_handler();
 
 
-//$prro = TPSPayRROAPI::get();
+$prro = TPSPayRROAPI::get(2);
 //file_put_contents('private://prro.cookies.txt', 'testccc');
 //$prro = TPSPayPrro::get()->shiftOpen();
-//$prro = TPSPayRROAPI::get()->validateWorkingState(false);
-//$prro = TPSPayPrro::get()->receiptGetLast();
-//var_dump($prro);
-//$res = $prro->receiptGetLast();
+$res = $prro->validateWorkingState(false);
+$res = $prro->receiptGetLast();
+//$res = $prro->shiftClose();
+var_dump($res);
 //$prro->shiftClose();
 
 //$prro->receiptDeleteActive(); die();
