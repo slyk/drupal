@@ -1,0 +1,15 @@
+[Unit]
+Description=CheckBox Kasa (%i)
+After=network.target
+StartLimitIntervalSec=1
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=60
+User=toopro
+WorkingDirectory=/var/www/petr.tps.my/sites/default/files-private/tps/prro/%i
+ExecStart=/usr/bin/checkbox_kasa --config /var/www/petr.tps.my/sites/default/files-private/tps/prro/%i/config.json
+
+[Install]
+WantedBy=multi-user.target
