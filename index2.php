@@ -27,10 +27,13 @@ drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 //$res = $prro->validateWorkingState(false);
 //$res = $prro->receiptGetLast();
 //$res = $prro->shiftClose();
-module_load_include('inc','tps_pay_method','tpspay.resource');
-$res = _tpsrr_rro_get_logs();
-//var_dump($res);
-print_r($res);
+
+module_load_include('inc','tps_retail','tps.resource');
+//$res = _tpsrr_rro_get_logs();
+$res = _tpsrr_close_day((object)array("uid"=>0));
+
+var_dump($res);
+//echo "res = ".$formatInfo;
 //$prro->shiftClose();
 
 //$prro->receiptDeleteActive(); die();
@@ -42,6 +45,7 @@ print_r($res);
 //module_load_include('inc','tps_pay_method','tpspay.resource');
 //_tpsrr_rro_receipt_check('1R8S+8');
 //print_r($res);
+
 die("уже не пользуемся этой штукой");
 
 //load transaction and convert to trans object (so we can save it in future)
