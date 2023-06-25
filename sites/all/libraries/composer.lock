@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "87c86db6aa3970e945b56a674986a768",
+    "packages": [
+        {
+            "name": "alantiller/directus-php-sdk",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alantiller/directus-php-sdk.git",
+                "reference": "a96fa861fa1ace45d01286b7e8c3e9d7668613fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alantiller/directus-php-sdk/zipball/a96fa861fa1ace45d01286b7e8c3e9d7668613fc",
+                "reference": "a96fa861fa1ace45d01286b7e8c3e9d7668613fc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": "^7.0 || ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Directus.php"
+                ],
+                "psr-4": {
+                    "Slations\\DirectusSdk\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alan Tiller",
+                    "email": "github@alantiller.com"
+                }
+            ],
+            "description": "The Slations unofficial PHP SDK for Directus 9",
+            "support": {
+                "issues": "https://github.com/alantiller/directus-php-sdk/issues",
+                "source": "https://github.com/alantiller/directus-php-sdk/tree/v1.0.3"
+            },
+            "time": "2022-05-08T19:21:54+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

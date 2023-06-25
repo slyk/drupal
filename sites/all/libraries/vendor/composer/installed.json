@@ -1,0 +1,53 @@
+{
+    "packages": [
+        {
+            "name": "alantiller/directus-php-sdk",
+            "version": "v1.0.3",
+            "version_normalized": "1.0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alantiller/directus-php-sdk.git",
+                "reference": "a96fa861fa1ace45d01286b7e8c3e9d7668613fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alantiller/directus-php-sdk/zipball/a96fa861fa1ace45d01286b7e8c3e9d7668613fc",
+                "reference": "a96fa861fa1ace45d01286b7e8c3e9d7668613fc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": "^7.0 || ^8.0"
+            },
+            "time": "2022-05-08T19:21:54+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/Directus.php"
+                ],
+                "psr-4": {
+                    "Slations\\DirectusSdk\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alan Tiller",
+                    "email": "github@alantiller.com"
+                }
+            ],
+            "description": "The Slations unofficial PHP SDK for Directus 9",
+            "support": {
+                "issues": "https://github.com/alantiller/directus-php-sdk/issues",
+                "source": "https://github.com/alantiller/directus-php-sdk/tree/v1.0.3"
+            },
+            "install-path": "../alantiller/directus-php-sdk"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

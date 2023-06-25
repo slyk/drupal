@@ -3,7 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/sites/all/modules/TooPro" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/sites/all/modules/data_export_import/Data Export Import" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/sites/all/modules/raredata" vcs="Git" />
   </component>
 </project>

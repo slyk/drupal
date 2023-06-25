@@ -2,8 +2,9 @@
 sites/*/settings*.php
 
 # Ignore paths that contain user-generated content.
-sites/*/files
-sites/*/private
+sites/*/files/
+sites/*/files_private/
+sites/*/private/
 #/sites/all/libraries/Zend/
 /sites/all/libraries/prro/logs/
 /sites/all/libraries/prro/kasa-*/files_printer/
