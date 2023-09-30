@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'decc78cc4436b1292c6c0d151b19445c' => $vendorDir . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
     '71b863b70552e163466c17fc2beb6539' => $vendorDir . '/alantiller/directus-php-sdk/src/Directus.php',
 );
