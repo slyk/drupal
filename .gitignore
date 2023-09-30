@@ -3,6 +3,7 @@ sites/*/settings*.php
 
 # Ignore paths that contain user-generated content.
 /sites/*/files/
+/nff/
 /sites/*/files_private/
 /sites/default/files-private/
 /sites/*/private/
