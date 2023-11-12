@@ -53,4 +53,3 @@
  * @see conf_path()
  * @see http://drupal.org/documentation/install/multi-site
  */
-$sites['petr.tps.my'] = 'petr.tps.my';

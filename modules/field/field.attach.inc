@@ -179,7 +179,6 @@ define('FIELD_STORAGE_INSERT', 'insert');
  *    languages to act on.
  */
 function _field_invoke($op, $entity_type, $entity, &$a = NULL, &$b = NULL, $options = array()) {
-
   // Merge default options.
   $default_options = array(
     'default' => FALSE,
