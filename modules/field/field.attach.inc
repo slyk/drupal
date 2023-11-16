@@ -220,10 +220,9 @@ function _field_invoke($op, $entity_type, $entity, &$a = NULL, &$b = NULL, $opti
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////////
-        //toopro tps fix 07.2021 !!fix TPS saving DATA fields
+        //toopro tps fix 07.2021 !!fix TPS saving DATA fields tpsfix data hash
         if($field_name=='data' && $op=='extract_form_values' && !isset($entity->{$field_name}[$langcode])) {
-            $entity->data = $b['values']['data'];
-            //print_r($entity); die();// debug_print_backtrace(); print_r($b['values']['data']); die();
+            $entity->data = $b['values']['data'];//print_r($entity); die();// debug_print_backtrace(); print_r($b['values']['data']); die();
         };//toopro tps fix
         ////toopro tps fix 07.2021 !!fix TPS saving DATA fields
 
