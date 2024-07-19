@@ -1,5 +1,10 @@
 to add checkbox service
 
+Актуальну версію каси ви можете завантажити за посиланням
+
+https://api.checkbox.ua/update-service/api/v1/rro_agent/versions/latest/linux-x86_64/installer
+
+
 1. stop kasa
 2. You should nstall 1.3.12 version from files-private/tps/prro
 Create fop2 and fop3 folder in files-private/tps/prro add permissions

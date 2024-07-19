@@ -13,6 +13,45 @@ switch ($srv) {
     case 'nfeya.com'    : $srv = 'https://nfeya.com/'; break;
     default: die();
 }
-
 $url = $srv . $path;
+
+// Get the headers from the destination URL
+$responseHeaders = get_headers($url, 1); //print_r($responseHeaders);die();
+if(strpos($url, 'nfeya.com') !== FALSE) { //for imges we need headeres, for json not
+    foreach ($responseHeaders as $name => $value) {
+        if (is_array($value)) foreach ($value as $item) header("$name: $item", false);
+        else header("$name: $value", false);
+    }
+}
+
+//check if its webp image then it will echo webp and return true
+$jpegConverted = checkWebp($responseHeaders, $url); if($jpegConverted) die($jpegConverted);
+
+// Finally, output the content
 echo file_get_contents($url);
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+function checkWebp($headers, $url) {
+  //if its not webp image, return false
+  if(!isset($headers['Content-Type']) || $headers['Content-Type'] != 'image/webp') return false;
+
+  //for webp we need to convert it to jpg
+  $img = imagecreatefromwebp($url);
+
+  //output to var
+  ob_start();
+  imagejpeg($img, null, 60);
+  $content = ob_get_clean(); // Get the content of the output buffer
+  imagedestroy($img);
+
+  //remove old header and set new one
+  header_remove();
+  header_remove('Content-Type');
+  header('Content-Type: image/jpeg');
+  //add feader with filename of the downloaded file
+  //header('Content-Disposition: inline; filename="'.basename($url).'.jpg"');
+  header('Content-Disposition: inline; filename=photo.jpeg');
+  return $content;
+}
