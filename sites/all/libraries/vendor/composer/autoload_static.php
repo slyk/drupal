@@ -12,6 +12,11 @@ class ComposerStaticInit543e8c2b30e3762206719a9389991a18
     );
 
     public static $prefixLengthsPsr4 = array (
+        't' => 
+        array (
+            'tps_directus\\' => 13,
+            'tps_amqp\\' => 9,
+        ),
         'p' => 
         array (
             'phpseclib3\\' => 11,
@@ -28,6 +33,14 @@ class ComposerStaticInit543e8c2b30e3762206719a9389991a18
     );
 
     public static $prefixDirsPsr4 = array (
+        'tps_directus\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/../modules/TooPro/tps_directus',
+        ),
+        'tps_amqp\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/../modules/TooPro/tps_amqp',
+        ),
         'phpseclib3\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',

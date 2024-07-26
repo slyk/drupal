@@ -2,5 +2,11 @@
     "require": {
         "alantiller/directus-php-sdk": "^1.0",
         "php-amqplib/php-amqplib": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "tps_amqp\\": "../modules/TooPro/tps_amqp",
+            "tps_directus\\": "../modules/TooPro/tps_directus"
+        }
     }
 }
