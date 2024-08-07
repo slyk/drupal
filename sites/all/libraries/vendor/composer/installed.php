@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'f700c3b297cbbbe54a4f300b32f74091f2914917',
+        'reference' => '21104803a2f2aa456249754274d6f59d1afc910c',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'f700c3b297cbbbe54a4f300b32f74091f2914917',
+            'reference' => '21104803a2f2aa456249754274d6f59d1afc910c',
             'dev_requirement' => false,
         ),
         'alantiller/directus-php-sdk' => array(

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8afb6a7eabce1017415093536637b87",
+    "content-hash": "2e93d2c5a99cafc004760e0484b78afd",
     "packages": [
         {
             "name": "alantiller/directus-php-sdk",
@@ -365,7 +365,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.4 || ^8.0"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.2.0"
 }
