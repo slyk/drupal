@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '21104803a2f2aa456249754274d6f59d1afc910c',
+        'reference' => 'ab0757e4a838dcbd67d4aa8b999a6c10737614d9',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '21104803a2f2aa456249754274d6f59d1afc910c',
+            'reference' => 'ab0757e4a838dcbd67d4aa8b999a6c10737614d9',
             'dev_requirement' => false,
         ),
         'alantiller/directus-php-sdk' => array(
@@ -29,12 +29,12 @@
             'dev_requirement' => false,
         ),
         'paragonie/constant_time_encoding' => array(
-            'pretty_version' => 'v3.0.0',
-            'version' => '3.0.0.0',
+            'pretty_version' => 'v2.7.0',
+            'version' => '2.7.0.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../paragonie/constant_time_encoding',
             'aliases' => array(),
-            'reference' => 'df1e7fde177501eee2037dd159cf04f5f301a512',
+            'reference' => '52a0d99e69f56b9ec27ace92ba56897fe6993105',
             'dev_requirement' => false,
         ),
         'paragonie/random_compat' => array(
