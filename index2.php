@@ -30,8 +30,10 @@ drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
 module_load_include('inc','tps_retail','tps.resource');
 //$res = _tpsrr_rro_get_logs();
-$res = _tpsrr_close_day((object)array("uid"=>0));
+//$res = _tpsrr_close_day((object)array("uid"=>0));
+$res = _tpsrr_conf_check_status((object)array("purpose_id"=>'c5k_place10_uid123_v88_11.02.24'));
 
+echo 'pl: ';
 var_dump($res);
 //echo "res = ".$formatInfo;
 //$prro->shiftClose();

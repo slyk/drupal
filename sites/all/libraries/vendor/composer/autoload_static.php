@@ -15,6 +15,7 @@ class ComposerStaticInit07159bef9823f094e4468520420ad1d1
         't' => 
         array (
             'tps_directus\\' => 13,
+            'tps_bonus\\' => 10,
             'tps_amqp\\' => 9,
         ),
         'p' => 
@@ -36,6 +37,10 @@ class ComposerStaticInit07159bef9823f094e4468520420ad1d1
         'tps_directus\\' => 
         array (
             0 => __DIR__ . '/../..' . '/../modules/TooPro/tps_directus',
+        ),
+        'tps_bonus\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/../modules/TooPro/tps_bonus',
         ),
         'tps_amqp\\' => 
         array (

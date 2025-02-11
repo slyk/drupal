@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'tps_directus\\' => array($baseDir . '/../modules/TooPro/tps_directus'),
+    'tps_bonus\\' => array($baseDir . '/../modules/TooPro/tps_bonus'),
     'tps_amqp\\' => array($baseDir . '/../modules/TooPro/tps_amqp'),
     'phpseclib3\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Slations\\DirectusSdk\\' => array($vendorDir . '/alantiller/directus-php-sdk/src'),
