@@ -4,13 +4,14 @@
  * need to add crossdomain.xml to all websites root whre we need to download files or use this proxy
  */
 
-$srv = $_GET['srv'];
-$path= $_GET['path'];
+$srv  = $_GET['srv'];
+$path = $_GET['path'];
 
 //if($srv=='tpsadminfuncs') $srv = 'http://srv1.toopro.org:3088/'; else die();
 switch ($srv) {
     case 'tpsadminfuncs': $srv = 'http://adm.toopro.org:3088/'; break;
     case 'nfeya.com'    : $srv = 'https://nfeya.com/'; break;
+    case 'daemon'       : $srv = 'http://localhost:3100/'; break; //example: http://petr.tps.my/proxy.php?srv=daemon&path=api/pos-terminal/ping
     default: die();
 }
 $url = $srv . $path;
@@ -24,11 +25,12 @@ if(strpos($url, 'nfeya.com') !== FALSE) { //for imges we need headeres, for json
     }
 }
 
-//check if its webp image then it will echo webp and return true
+//check if its webp image then it will echo jpg and return true
 $jpegConverted = checkWebp($responseHeaders, $url); if($jpegConverted) die($jpegConverted);
 
 // Finally, output the content
 echo file_get_contents($url);
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +52,7 @@ function checkWebp($headers, $url) {
   header_remove();
   header_remove('Content-Type');
   header('Content-Type: image/jpeg');
-  //add feader with filename of the downloaded file
+  //add header with filename of the downloaded file
   //header('Content-Disposition: inline; filename="'.basename($url).'.jpg"');
   header('Content-Disposition: inline; filename=photo.jpeg');
   return $content;
