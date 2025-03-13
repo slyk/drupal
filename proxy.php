@@ -29,7 +29,12 @@ if(strpos($url, 'nfeya.com') !== FALSE) { //for images we need headeres, for jso
 }
 
 // Finally, output the content
-$timeout = 10; if($_GET['srv']=='daemon') $timeout = 120; //for daemon we need more time
+$timeout = 10;
+if($_GET['srv']=='daemon') {
+    $timeout = 120;                                         // for daemon we need more time
+    ini_set('max_execution_time', 120);         // set max execution time to 120 seconds
+    ini_set('max_input_time', 120);             // set max input time to 120 seconds
+}
 $context = stream_context_create([
     'http' => [ 'timeout' => $timeout ]
 ]);
