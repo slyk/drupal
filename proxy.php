@@ -16,21 +16,24 @@ switch ($srv) {
 }
 $url = $srv . $path;
 
-// Get the headers from the destination URL
-$responseHeaders = get_headers($url, 1); //print_r($responseHeaders);die();
-if(strpos($url, 'nfeya.com') !== FALSE) { //for imges we need headeres, for json not
+// Get the headers from the destination URL (this makes double request, so only for nfeya.com image requests)
+if(strpos($url, 'nfeya.com') !== FALSE) { //for images we need headeres, for json not
+    $responseHeaders = get_headers($url, 1); //print_r($responseHeaders);die();
     foreach ($responseHeaders as $name => $value) {
         if (is_array($value)) foreach ($value as $item) header("$name: $item", false);
         else header("$name: $value", false);
     }
+
+    //check if its webp image then it will echo jpg and return true
+    $jpegConverted = checkWebp($responseHeaders, $url); if($jpegConverted) die($jpegConverted);
 }
 
-//check if its webp image then it will echo jpg and return true
-$jpegConverted = checkWebp($responseHeaders, $url); if($jpegConverted) die($jpegConverted);
-
 // Finally, output the content
-echo file_get_contents($url);
-
+$timeout = 10; if($_GET['srv']=='daemon') $timeout = 120; //for daemon we need more time
+$context = stream_context_create([
+    'http' => [ 'timeout' => $timeout ]
+]);
+echo file_get_contents($url, false, $context);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
