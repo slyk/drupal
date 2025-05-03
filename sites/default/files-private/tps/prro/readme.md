@@ -24,3 +24,14 @@ add to autorun systemctl enable tps-checkbox@fop2.service
 replace logs file in config to 
 /var/log/checkbox/rro_agent2.log
 replase port numbers (fop2 = 9202, 13002)
+
+### update 05.2025 for QRs
+```bash
+# check that you CLOSED shift before update!!!
+wget https://nfeya.com/tps/checkbox-rro-agent-v1.6.7.deb
+sudo service tps-checkbox@fop2 stop
+sudo service tps-checkbox@fop3 stop
+sudo dpkg -i checkbox-rro-agent-v1.6.7.deb
+#sudo systemctl daemon-reload
+sudo service tps-checkbox@fop2 start
+```
