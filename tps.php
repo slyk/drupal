@@ -48,8 +48,7 @@ die();
 
 
 function listTransactions($dateFrom) {
-	module_load_include('php','tps_ent','TPSEntityFieldQuery');
-	module_load_include('php','tps_ent','TransactionsRangeFilterVO');
+	module_load_include('php','tps_transaction','TransactionsRangeFilterVO');
 	$filter = new TransactionsRangeFilterVO();
 	$filter->status = array(10,20); //10 ordered; 20 payed
 	$filter->type 	= array(1);
