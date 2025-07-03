@@ -12,12 +12,17 @@ switch ($srv) {
     case 'tpsadminfuncs': $srv = 'http://adm.toopro.org:3088/'; break;
     case 'nfeya.com'    : $srv = 'https://nfeya.com/'; break;
     case 'daemon'       : $srv = 'http://localhost:3100/'; break; //example: http://petr.tps.my/proxy.php?srv=daemon&path=api/pos-terminal/ping
+    case 'imgrequest'   : $srv = ''; break; //we allow any url but add webp to jpg conversion
     default: die();
 }
 $url = $srv . $path;
 
 // Get the headers from the destination URL (this makes double request, so only for nfeya.com image requests)
-if(strpos($url, 'nfeya.com') !== FALSE) { //for images we need headeres, for json not
+if(
+    strpos($url, 'nfeya.com') !== FALSE ||      //for images we need headeres, for json not
+    $srv == 'imgrequest'
+) {
+    //get headers from server re-add headers to our response to client
     $responseHeaders = get_headers($url, 1); //print_r($responseHeaders);die();
     foreach ($responseHeaders as $name => $value) {
         if (is_array($value)) foreach ($value as $item) header("$name: $item", false);
