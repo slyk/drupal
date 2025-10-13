@@ -6,3 +6,7 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+# Zencoder local files
+/zencoder/chats
+/zencoder-chat-index.xml
+/zencoder-chats-dedicated.xml
