@@ -9,7 +9,9 @@ Restart=always
 RestartSec=60
 User=toopro
 WorkingDirectory=/var/www/petr.tps.my/sites/default/files-private/tps/prro/%i
-ExecStart=/usr/bin/checkbox_kasa --config /var/www/petr.tps.my/sites/default/files-private/tps/prro/%i/config.json
+#ExecStart=/usr/bin/checkbox_kasa --config /var/www/petr.tps.my/sites/default/files-private/tps/prro/%i/config.json
+#colored output:
+ExecStart=/usr/bin/script -qec "/usr/bin/checkbox_kasa --config /var/www/petr.tps.my/sites/default/files-private/tps/prro/%i/config.json" /dev/null
 
 [Install]
 WantedBy=multi-user.target
