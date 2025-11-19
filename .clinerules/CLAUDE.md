@@ -1,0 +1,1 @@
+Use the main project [CLAUDE rules](../sites/all/modules/TooPro/CLAUDE.md) for code understanding and generation and files that this CLAUDE.md links as rules too.
