@@ -2,7 +2,8 @@ to add checkbox service
 
 Актуальну версію каси ви можете завантажити за посиланням
 
-https://api.checkbox.ua/update-service/api/v1/rro_agent/versions/latest/linux-x86_64/installer
+- latest: https://api.checkbox.ua/update-service/api/v1/rro_agent/versions/latest/linux-x86_64/installer
+- 02.2026: https://api.checkbox.ua/update-service/api/v1/rro_agent/versions/1.7.5/linux-x86_64/installer
 
 
 1. stop kasa
